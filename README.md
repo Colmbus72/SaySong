@@ -12,7 +12,9 @@
 ## System Requirements
 
 `ffmpeg`
+
 `say` OR `espeak`
+
 `curl`
 
 ## Usage
@@ -20,7 +22,9 @@
 SaySong will write all songs lyrics and mp3s under ~/SaySong/
 
 -a | Artist
+
 -s | Song
+
 -v | Voice
 
 ### Examples
