@@ -32,7 +32,7 @@ then
     COMMAND="say"
 elif [ -x "$(command -v espeak)" ]
 then
-    COMMAND="epseak"
+    COMMAND="espeak"
 fi
 
 if [ ! "$COMMAND" ]
@@ -70,18 +70,18 @@ done
 # Validate Arguments
 if [ "$COMMAND" = "say" ]
 then
-    if ! $(say -v? | cut -d ' ' -f1 | grep -i "$VOICE")
+    if [ -n "$VOICE" ] && ! $(say -v? | cut -d ' ' -f1 | grep -qi "$VOICE")
     then
         echo "Cannot find voice: $VOICE. Please try one of these:"
         say -v?
         exit 1;
     fi
 else
-    if [ ! "$VOICE" ] 
+    if [ ! "$VOICE" ]
     then
         VOICE="default"
     fi
-    if ! $(espeak --voices | espeak --voices | awk '{print $4}' | sed -n '1!p' | grep -i "$VOICE")
+    if ! $(espeak --voices | awk '{print $4}' | sed -n '1!p' | grep -qi "$VOICE")
     then
         echo "Cannot find voice: $VOICE. Please try one of these:"
         espeak --voices
