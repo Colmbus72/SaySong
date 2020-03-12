@@ -19,7 +19,7 @@
 
 ## Usage
 
-SaySong will write all songs lyrics and mp3s under ~/SaySong/
+SaySong will write all song lyrics and mp3s under ~/SaySong/\<ArtistName\>/
 
 ```
 -a   | Artist
