@@ -21,11 +21,11 @@
 
 SaySong will write all songs lyrics and mp3s under ~/SaySong/
 
--a | Artist
-
--s | Song
-
--v | Voice
+```
+-a   | Artist
+-s   | Song
+-v   | Voice
+```
 
 ### Examples
 
