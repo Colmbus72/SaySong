@@ -61,7 +61,6 @@ case $key in
     ;;
     -d|--delete-lyrics)
     REMOVE_LYRICS=1
-    shift
     ;;
 esac
 shift
