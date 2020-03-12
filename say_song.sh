@@ -68,9 +68,25 @@ shift
 done
 
 # Validate Arguments
-if [ ! "$VOICE" ] && [ "$COMMAND" = "espeak" ]
+if [ "$COMMAND" = "say" ]
 then
-    VOICE="default"
+    if ! $(say -v? | cut -d ' ' -f1 | grep -i "$VOICE")
+    then
+        echo "Cannot find voice: $VOICE. Please try one of these:"
+        say -v?
+        exit 1;
+    fi
+else
+    if [ ! "$VOICE" ] 
+    then
+        VOICE="default"
+    fi
+    if ! $(espeak --voices | espeak --voices | awk '{print $4}' | sed -n '1!p' | grep -i "$VOICE")
+    then
+        echo "Cannot find voice: $VOICE. Please try one of these:"
+        espeak --voices
+        exit 1;
+    fi
 fi
 
 if [ ! "$SONG" ]
