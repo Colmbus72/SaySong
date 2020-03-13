@@ -112,13 +112,21 @@ echo "Getting $SONG by $ARTIST"
 LYRICS_FILE_PATH="$DIR/$SONG.txt"
 RAW_FILE_PATH="$DIR/$SONG.$( if [ "$COMMAND" = "say" ]; then echo "aiff"; else echo "wav"; fi )"
 MP3_FILE_PATH="$DIR/$SONG.mp3"
+NOT_FOUND_STR="We have a large, legal, every day growing universe of lyrics where stars of all genres and ages shine"
 
 LYRIC_ARTIST=$(echo "$ARTIST" | tr [:upper:] [:lower:] | tr -cd [:alnum:])
 LYRIC_SONG=$(echo "$SONG" | tr [:upper:] [:lower:] | tr -cd [:alnum:])
 
-curl -s -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36" "https://www.azlyrics.com/lyrics/$LYRIC_ARTIST/$LYRIC_SONG.html" | grep "<br>" | sed -E 's/(<\/?br?>)|(<a.*.<\/a>)|(<span.*.<\/span>)|(<i>.*.<\/i>)|(<div.*)|(&quot;)//g' | sed -n '1!p' | sed '$d' > "$LYRICS_FILE_PATH"
+curl -s \
+    -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36" \
+    "https://www.azlyrics.com/lyrics/$LYRIC_ARTIST/$LYRIC_SONG.html" |
+    grep "<br>" |
+    sed -E 's/(<\/?br?>)|(<a.*.<\/a>)|(<span.*.<\/span>)|(<i>.*.<\/i>)|(<div.*)|(&quot;)//g' |
+    sed -n '1!p' |
+    sed '$d' \
+    > "$LYRICS_FILE_PATH"
 
-if grep -q "We have a large, legal, every day growing universe of lyrics where stars of all genres and ages shine" "$LYRICS_FILE_PATH"
+if grep -q "$NOT_FOUND_STR" "$LYRICS_FILE_PATH"
 then
     echo "Cannot find song: \"$SONG\" by \"$ARTIST\""
     rm "$LYRICS_FILE_PATH"
