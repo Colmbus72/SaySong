@@ -42,10 +42,9 @@ then
 fi
 
 # get command line arguments
-while [[ $# -gt 1 ]]
+while [[ "$#" -gt 0 ]]
 do
 key="$1"
-
 case $key in
     -a|--artist)
     ARTIST="$2"
@@ -61,6 +60,10 @@ case $key in
     ;;
     -d|--delete-lyrics)
     REMOVE_LYRICS=1
+    ;;
+    *)
+    echo "Unknown parameter passed: $key"
+    exit 1
     ;;
 esac
 shift
